@@ -1,4 +1,4 @@
-package com.dranoer.abnamro
+package com.dranoer.abnamro.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

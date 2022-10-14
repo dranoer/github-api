@@ -1,20 +1,29 @@
 package com.dranoer.abnamro.data.model
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import kotlinx.serialization.SerialName
 
+@Parcelize
 data class Repo(
-    @field:SerializedName("id")
+    @SerialName("id")
     val id: Long,
 
-    @field:SerializedName("name")
+    @SerialName("name")
     val name: String,
 
-    @field:SerializedName("avatar_url")
-    val avatarUrl: String,
+    @SerialName("owner")
+    val owner: Owner,
 
-    @field:SerializedName("private")
+    @SerialName("private")
     val private: Boolean,
 
-    @field:SerializedName("visibility")
+    @SerialName("visibility")
     val visibility: String,
-)
+) : Parcelable
+
+@Parcelize
+data class Owner(
+    @SerialName("avatar_url")
+    val avatar_url: String
+) : Parcelable

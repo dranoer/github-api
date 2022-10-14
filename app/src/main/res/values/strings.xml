@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Abnamro</string>
+    <string name="refresh_failed">Something went wrong</string>
 </resources>

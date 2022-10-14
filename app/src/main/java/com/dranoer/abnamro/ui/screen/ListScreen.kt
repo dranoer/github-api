@@ -1,68 +1,81 @@
 package com.dranoer.abnamro.ui.screen
 
-import androidx.compose.foundation.Image
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LiveData
 import com.dranoer.abnamro.R
 import com.dranoer.abnamro.data.model.Repo
-import com.dranoer.abnamro.ui.theme.AbnamroTheme
-import com.dranoer.abnamro.ui.viewmodel.RepoViewModel
+import com.dranoer.abnamro.ui.MainViewModel
+import com.dranoer.abnamro.ui.OnClickListener
+import com.dranoer.abnamro.ui.component.ErrorView
+import com.dranoer.abnamro.ui.component.VerticalListView
+import com.dranoer.abnamro.ui.util.ViewState
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun ListScreen(
     modifier: Modifier = Modifier,
-    viewModel: RepoViewModel = hiltViewModel(),
+    viewModel: MainViewModel = hiltViewModel(),
 ) {
     ListContent(
         modifier = modifier.padding(8.dp),
-        repoList = viewModel.repos,
-        name = "temp",
-        visibility = "publiC"
+        viewState = viewModel.stateFlow.collectAsState().value,
+        isRefreshing = viewModel.isRefreshing.collectAsState().value,
+        onRefresh = { viewModel.refresh() },
     )
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun ListContent(
     modifier: Modifier = Modifier,
-    repoList: LiveData<List<Repo>>? = null,
-    name: String = "",
-    imageUrl: String = "",
-    visibility: String = "",
-    isPublic: Boolean = true,
+    viewState: ViewState<List<Repo>>,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
 ) {
-    Card {
-        Column(
-            modifier = modifier,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = null
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Column(modifier = Modifier.padding(4.dp)) {
+                        Text(text = stringResource(id = R.string.app_name))
+                    }
+                },
+                elevation = 8.dp,
             )
-            Text(text = name)
-            Text(text = visibility)
-            Text(text = if (isPublic) "Public" else "Private")
+        },
+        content = {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                when (viewState) {
+                    is ViewState.Loading -> CircularProgressIndicator()
+                    is ViewState.Success -> {
+                        SwipeRefresh(
+                            state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+                            onRefresh = { onRefresh },
+                        ) {
+                            VerticalListView(viewState.data, OnClickListener { repo ->
+                                // ToDo
+                            })
+                        }
+                    }
+                    is ViewState.Error ->
+                        ErrorView(message = viewState.message, onRefresh)
+                }
+            }
         }
-    }
-    Text(text = name)
+    )
 }
-
-//region Preview
-@Preview()
-@Composable
-fun ListScreenPreview() {
-    AbnamroTheme {
-        ListContent()
-    }
-}
-//endregion

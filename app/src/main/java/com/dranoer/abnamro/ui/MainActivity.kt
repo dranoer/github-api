@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dranoer.abnamro.ui.screen.DetailScreen
 import com.dranoer.abnamro.ui.screen.ListScreen
 import com.dranoer.abnamro.ui.theme.AbnamroTheme
 import com.dranoer.abnamro.ui.util.Route
@@ -33,7 +34,16 @@ fun AppScreen() {
         startDestination = Route.List.route,
     ) {
         composable(route = Route.List.route) {
-            ListScreen()
+            ListScreen(
+                onClickToDetailScreen = { repoId ->
+                    navController.navigate(
+                        Route.Detail.createRoute(repoId)
+                    )
+                }
+            )
+        }
+        composable(route = Route.Detail.route) {
+            DetailScreen()
         }
     }
 }

@@ -27,12 +27,14 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 fun ListScreen(
     modifier: Modifier = Modifier,
     viewModel: MainViewModel = hiltViewModel(),
+    onClickToDetailScreen: (Long) -> Unit = {},
 ) {
     ListContent(
         modifier = modifier.padding(8.dp),
         viewState = viewModel.stateFlow.collectAsState().value,
         isRefreshing = viewModel.isRefreshing.collectAsState().value,
         onRefresh = { viewModel.refresh() },
+        onClickToDetailScreen = onClickToDetailScreen,
     )
 }
 
@@ -43,6 +45,7 @@ private fun ListContent(
     viewState: ViewState<List<Repo>>,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
+    onClickToDetailScreen: (Long) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -68,7 +71,7 @@ private fun ListContent(
                             onRefresh = { onRefresh },
                         ) {
                             VerticalListView(viewState.data, OnClickListener { repo ->
-                                // ToDo
+                                onClickToDetailScreen.invoke(repo.id)
                             })
                         }
                     }

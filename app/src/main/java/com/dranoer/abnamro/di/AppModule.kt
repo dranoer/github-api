@@ -1,7 +1,6 @@
 package com.dranoer.abnamro.di
 
 import com.dranoer.abnamro.BuildConfig
-import com.dranoer.abnamro.data.remote.NetworkDataSource
 import com.dranoer.abnamro.data.remote.WebService
 import com.dranoer.abnamro.domain.RepoRepository
 import com.dranoer.abnamro.ui.util.Const.BASE_API
@@ -52,6 +51,6 @@ class AppModule {
     @Singleton
     @Provides
     fun provideRepository(
-        remoteSource: NetworkDataSource,
-    ) = RepoRepository(remoteSource)
+        webService: WebService,
+    ) = RepoRepository(webService)
 }

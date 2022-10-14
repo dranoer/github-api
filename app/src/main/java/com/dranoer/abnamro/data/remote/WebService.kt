@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface WebService {
 
     @GET("repos")
-    suspend fun getRepos(
+    suspend fun getRepoList(
         @Query("page") page: Int,
         @Query("per_page") pageSize: Int,
     ): List<Repo>

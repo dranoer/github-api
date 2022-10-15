@@ -5,12 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.dranoer.abnamro.ui.screen.DetailScreen
 import com.dranoer.abnamro.ui.screen.ListScreen
 import com.dranoer.abnamro.ui.theme.AbnamroTheme
+import com.dranoer.abnamro.ui.util.Const.DETAIL_ARG_REPO_ID
 import com.dranoer.abnamro.ui.util.Route
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,8 +45,22 @@ fun AppScreen() {
                 }
             )
         }
-        composable(route = Route.Detail.route) {
-            DetailScreen()
+        composable(
+            route = Route.Detail.route,
+            arguments = listOf(
+                navArgument(DETAIL_ARG_REPO_ID) {
+                    type = NavType.LongType
+                }
+            )
+        ) { backStackEntry ->
+            val repoId = backStackEntry.arguments?.getLong(DETAIL_ARG_REPO_ID)
+            requireNotNull(repoId) { "repo id wasn't found!" }
+            DetailScreen(
+                id = repoId,
+                backPress = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

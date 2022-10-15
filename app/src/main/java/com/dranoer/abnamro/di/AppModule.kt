@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.dranoer.abnamro.BuildConfig
 import com.dranoer.abnamro.data.local.AppDatabase
+import com.dranoer.abnamro.data.local.RepoDao
 import com.dranoer.abnamro.data.remote.WebService
 import com.dranoer.abnamro.domain.RepoRepository
 import com.dranoer.abnamro.ui.util.Const.BASE_API
@@ -57,7 +58,8 @@ class AppModule {
     @Provides
     fun provideRepository(
         webService: WebService,
-    ) = RepoRepository(webService)
+        dao: RepoDao,
+    ) = RepoRepository(webService, dao)
 
     @Singleton
     @Provides

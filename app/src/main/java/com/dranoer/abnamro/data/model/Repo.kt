@@ -10,20 +10,20 @@ data class Repo(
     val id: Long,
 
     @SerialName("name")
-    val name: String,
+    val name: String? = null,
 
     @SerialName("owner")
-    val owner: Owner,
+    val owner: Owner? = null,
 
     @SerialName("private")
-    val private: Boolean,
+    val private: Boolean? = null,
 
     @SerialName("visibility")
-    val visibility: String,
+    val visibility: String? = null,
 ) : Parcelable
 
 @Parcelize
 data class Owner(
     @SerialName("avatar_url")
-    val avatar_url: String
+    val avatar_url: String? = null
 ) : Parcelable

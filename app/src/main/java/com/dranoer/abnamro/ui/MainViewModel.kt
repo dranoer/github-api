@@ -3,14 +3,13 @@ package com.dranoer.abnamro.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dranoer.abnamro.data.model.Repo
+import com.dranoer.abnamro.data.model.RepoEntity
 import com.dranoer.abnamro.domain.RepoRepository
 import com.dranoer.abnamro.ui.util.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -19,6 +18,9 @@ class MainViewModel @Inject constructor(
 
     private val _stateFlow = MutableStateFlow<ViewState<List<Repo>>>(ViewState.Loading)
     val stateFlow: StateFlow<ViewState<List<Repo>>> = _stateFlow
+
+    private val _detailFlow = MutableStateFlow(RepoEntity())
+    val detailFlow: StateFlow<RepoEntity> = _detailFlow
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -34,6 +36,14 @@ class MainViewModel @Inject constructor(
                 _stateFlow.tryEmit(it)
             }
             _isRefreshing.emit(false)
+        }
+    }
+
+    fun getDetail(id: Long) {
+        viewModelScope.launch {
+            val result = repository.getDetail(id)
+            _detailFlow.emit(result)
+            return@launch
         }
     }
 }

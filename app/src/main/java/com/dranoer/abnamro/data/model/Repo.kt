@@ -12,15 +12,25 @@ data class Repo(
     @SerialName("name")
     val name: String? = null,
 
+    @SerialName("full_name")
+    val full_name: String? = null,
+
+    @SerialName("description")
+    val description: String? = null,
+
     @SerialName("owner")
     val owner: Owner? = null,
+
+    @SerialName("visibility")
+    val visibility: String? = null,
 
     @SerialName("private")
     val private: Boolean? = null,
 
-    @SerialName("visibility")
-    val visibility: String? = null,
-) : Parcelable
+    @SerialName("html_url")
+    val html_url: String? = null,
+
+    ) : Parcelable
 
 @Parcelize
 data class Owner(

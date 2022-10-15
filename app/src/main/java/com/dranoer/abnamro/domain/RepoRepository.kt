@@ -24,10 +24,13 @@ class RepoRepository @Inject constructor(
             for (item in items) {
                 dao.insertAll(RepoEntity(
                     id = item.id,
-                    name = item.name ?: "mm",
-                    avatar_url = item.owner?.avatar_url ?: "pp",
+                    name = item.name ?: "",
+                    full_name = item.full_name ?: "",
+                    description = item.description ?: "",
+                    avatar_url = item.owner?.avatar_url ?: "",
+                    visibility = item.visibility ?: "",
                     private = item.private ?: false,
-                    visibility = item.visibility ?: "not viss",
+                    html_url = item.html_url ?: "",
                 ))
             }
         }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Abnamro</string>
+    <string name="app_name">Github Repo</string>
     <string name="refresh_failed">Something went wrong</string>
     <string name="retry">Retry</string>
     <string name="privacy_state">Private: %s</string>

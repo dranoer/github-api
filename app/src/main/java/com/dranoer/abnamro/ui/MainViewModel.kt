@@ -46,4 +46,10 @@ class MainViewModel @Inject constructor(
             return@launch
         }
     }
+
+    fun finishLoading() {
+        viewModelScope.launch {
+            _isRefreshing.emit(false)
+        }
+    }
 }

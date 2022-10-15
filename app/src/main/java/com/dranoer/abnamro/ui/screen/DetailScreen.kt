@@ -1,19 +1,21 @@
 package com.dranoer.abnamro.ui.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dranoer.abnamro.R
 import com.dranoer.abnamro.ui.MainViewModel
 import com.dranoer.abnamro.ui.component.DetailItem
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import com.dranoer.abnamro.data.model.RepoEntity
 
 @Composable
@@ -37,7 +39,6 @@ fun DetailScreen(
     )
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun DetailContent(
     modifier: Modifier = Modifier,
@@ -46,19 +47,22 @@ private fun DetailContent(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Column(modifier = Modifier.padding(4.dp)) {
-                        Text(text = stringResource(id = R.string.app_name))
-                    }
-                },
-                elevation = 8.dp,
-            )
+            TopAppBar(title = { Text(stringResource(id = R.string.detail)) }, navigationIcon = {
+                IconButton(onClick = { backPress() }) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.app_name),
+                        tint = colorResource(id = R.color.white)
+                    )
+                }
+            })
         },
-        content = {
+        content = { padding ->
             Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentAlignment = Alignment.Center
             ) {
                 DetailItem(item = viewState)
             }

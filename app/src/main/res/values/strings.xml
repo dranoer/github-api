@@ -2,10 +2,9 @@
     <string name="app_name">Github Repo</string>
     <string name="refresh_failed">Something went wrong</string>
     <string name="retry">Retry</string>
-    <string name="privacy_state">Private: %s</string>
-    <string name="visibility_state">Visibility: %s</string>
-    <string name="is_true">True</string>
-    <string name="is_false">False</string>
+    <string name="visibility_status">Visibility: %s</string>
+    <string name="privacy_private">Private</string>
+    <string name="privacy_public">Public</string>
     <string name="back">Back</string>
     <string name="detail">Detail</string>
 </resources>

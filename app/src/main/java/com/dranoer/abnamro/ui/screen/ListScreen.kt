@@ -1,5 +1,6 @@
 package com.dranoer.abnamro.ui.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,7 +19,7 @@ import com.dranoer.abnamro.R
 import com.dranoer.abnamro.ui.MainViewModel
 import com.dranoer.abnamro.ui.OnClickListener
 import com.dranoer.abnamro.ui.component.ErrorView
-import com.dranoer.abnamro.ui.component.VerticalListView
+import com.dranoer.abnamro.ui.component.RepoListView
 import com.dranoer.abnamro.ui.util.ViewState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -39,7 +41,6 @@ fun ListScreen(
                         Text(text = stringResource(id = R.string.app_name))
                     }
                 },
-                elevation = 8.dp,
             )
         },
         content = { padding ->
@@ -48,6 +49,7 @@ fun ListScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
+                    .background(colorResource(id = R.color.light_blue)),
             ) {
                 when (viewState) {
                     is ViewState.Loading -> CircularProgressIndicator()
@@ -57,7 +59,7 @@ fun ListScreen(
                             state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
                             onRefresh = { viewModel.refresh() },
                         ) {
-                            VerticalListView(viewState.data, OnClickListener { repo ->
+                            RepoListView(viewState.data, OnClickListener { repo ->
                                 onClickToDetailScreen.invoke(repo.id)
                             })
                         }

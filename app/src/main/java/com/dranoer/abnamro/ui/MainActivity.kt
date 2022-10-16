@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.dranoer.abnamro.ui.screen.DetailScreen
 import com.dranoer.abnamro.ui.screen.ListScreen
-import com.dranoer.abnamro.ui.theme.AbnamroTheme
+import com.dranoer.abnamro.ui.theme.GithubRepoTheme
 import com.dranoer.abnamro.ui.util.Const.DETAIL_ARG_REPO_ID
 import com.dranoer.abnamro.ui.util.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AbnamroTheme {
+            GithubRepoTheme {
                 AppScreen()
             }
         }
@@ -68,7 +68,7 @@ fun AppScreen() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    AbnamroTheme {
+    GithubRepoTheme {
         AppScreen()
     }
 }

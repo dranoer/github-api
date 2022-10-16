@@ -2,6 +2,7 @@ package com.dranoer.abnamro.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -9,6 +10,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -22,6 +24,9 @@ import com.dranoer.abnamro.data.model.RepoEntity
 @ExperimentalCoilApi
 @Composable
 fun DetailItem(item: RepoEntity) {
+
+    val handler = LocalUriHandler.current
+
     Column {
         Row(
             modifier = Modifier
@@ -80,5 +85,12 @@ fun DetailItem(item: RepoEntity) {
             icon = Icons.Rounded.MoreVert,
             text = if (item.private) stringResource(R.string.privacy_private) else stringResource(R.string.privacy_public),
         ) //endregion
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.size_30)))
+        //region CTA button
+        Button(
+            onClick = { handler.openUri(item.html_url) }
+        ) {
+            Text(text = stringResource(id = R.string.open_repo))
+        } //endregion
     }
 }

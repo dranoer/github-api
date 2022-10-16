@@ -9,4 +9,5 @@
     <string name="detail">Detail</string>
     <string name="full_name">FullName: %s</string>
     <string name="description">Description</string>
+    <string name="open_repo">Open Repository</string>
 </resources>

@@ -66,24 +66,21 @@ fun RepoItem(item: Repo, callback: OnClickListener?) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     //region Visibility
-                    Icon(Icons.Rounded.Home, "Visibility status", Modifier.padding(end = 4.dp))
-                    Text(
+                    IconItem(
+                        icon = Icons.Rounded.Home,
                         text = stringResource(
                             id = R.string.visibility_status,
                             item.visibility.toString()
                         ),
-                        color = colorResource(id = R.color.dark_grey),
-                        style = MaterialTheme.typography.subtitle2,
+                        paddingEnd = 4,
                     )
                     Spacer(modifier = Modifier.width(20.dp)) //endregion
                     //region Privacy
-                    Icon(Icons.Rounded.MoreVert, "Privacy status")
-                    Text(
+                    IconItem(
+                        icon = Icons.Rounded.MoreVert,
                         text = if (item.private == true) stringResource(R.string.privacy_private) else stringResource(
                             R.string.privacy_public
                         ),
-                        color = colorResource(id = R.color.dark_grey),
-                        style = MaterialTheme.typography.subtitle2,
                     ) //endregion
                 } //endregion
             } //endregion

@@ -7,4 +7,6 @@
     <string name="privacy_public">Public</string>
     <string name="back">Back</string>
     <string name="detail">Detail</string>
+    <string name="full_name">FullName: %s</string>
+    <string name="description">Description</string>
 </resources>

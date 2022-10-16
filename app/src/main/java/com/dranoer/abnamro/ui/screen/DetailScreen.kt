@@ -3,7 +3,6 @@ package com.dranoer.abnamro.ui.screen
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -61,8 +60,7 @@ private fun DetailContent(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding),
-                contentAlignment = Alignment.Center
+                    .padding(30.dp),
             ) {
                 DetailItem(item = viewState)
             }

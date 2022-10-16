@@ -5,12 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,17 +65,16 @@ fun RepoItem(item: Repo, callback: OnClickListener?) {
                 ) {
                     //region Visibility
                     IconItem(
-                        icon = Icons.Rounded.Home,
+                        icon = Icons.Rounded.KeyboardArrowRight,
                         text = stringResource(
                             id = R.string.visibility_status,
                             item.visibility.toString()
                         ),
-                        paddingEnd = 4,
                     )
                     Spacer(modifier = Modifier.width(20.dp)) //endregion
                     //region Privacy
                     IconItem(
-                        icon = Icons.Rounded.MoreVert,
+                        icon = Icons.Rounded.KeyboardArrowRight,
                         text = if (item.private == true) stringResource(R.string.privacy_private) else stringResource(
                             R.string.privacy_public
                         ),

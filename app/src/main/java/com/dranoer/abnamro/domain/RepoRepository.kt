@@ -1,5 +1,6 @@
 package com.dranoer.abnamro.domain
 
+import android.util.Log
 import com.dranoer.abnamro.data.local.RepoDao
 import com.dranoer.abnamro.data.model.Repo
 import com.dranoer.abnamro.data.model.RepoEntity
@@ -15,14 +16,14 @@ class RepoRepository @Inject constructor(
     private val dao: RepoDao,
 ) {
 
-    suspend fun getRepos(): List<Repo> = webService.getRepoList(page = 1, pageSize = 10)
+    private suspend fun getRepos(): List<Repo> = webService.getRepoList(page = 1, pageSize = 10)
 
-    suspend fun queryRepos(): List<Repo> = dao.getRepos().asDomainModel()
+    private suspend fun queryRepos(): List<Repo> = dao.getRepos().asDomainModel()
 
-    suspend fun saveFetchResult(items: List<Repo>) {
-        while (items.isNotEmpty()) {
-            for (item in items) {
-                dao.insertAll(RepoEntity(
+    private suspend fun saveFetchResult(items: List<Repo>) {
+        for (item in items) {
+            dao.insertAll(
+                RepoEntity(
                     id = item.id,
                     name = item.name ?: "",
                     full_name = item.full_name ?: "",
@@ -31,32 +32,42 @@ class RepoRepository @Inject constructor(
                     visibility = item.visibility ?: "",
                     private = item.private ?: false,
                     html_url = item.html_url ?: "",
-                ))
-            }
+                )
+            )
         }
     }
 
-    fun isNotEmpty(t: List<Repo>): Boolean = t.isNotEmpty()
+    suspend fun getDetail(id: Long): RepoEntity {
+        return dao.getDetail(id)
+    }
 
     val result: Flow<ViewState<List<Repo>>> = flow {
         emit(ViewState.Loading)
-        queryRepos().let {
-            if (isNotEmpty(it)) {
-                emit(ViewState.Success(it))
-            }
+        val cache = queryRepos()
+        if (cache.isNotEmpty()) {
+            // step 1: View cache
+            emit(ViewState.Success(cache))
             try {
-                saveFetchResult(getRepos())
+                // step 2: Make network call, save result to the cache
+                refresh()
+                // step 3: View cash
                 emit(ViewState.Success(queryRepos()))
             } catch (t: Throwable) {
-                if (isNotEmpty(it)) {
-                    return@flow
-                }
-                emit(ViewState.Error("Something went wrong"))
+                Log.d("RepoRepository", t.localizedMessage ?: "Failed fetch")
+            }
+        } else {
+            try {
+                // step 1: Make network call, save result to the cache
+                refresh()
+                // step 2: View cash
+                emit(ViewState.Success(queryRepos()))
+            } catch (t: Throwable) {
+                emit(ViewState.Error("Failed refresh"))
             }
         }
     }.flowOn(Dispatchers.IO)
 
-    suspend fun getDetail(id: Long): RepoEntity {
-        return dao.getDetail(id)
+    private suspend fun refresh() {
+        saveFetchResult(getRepos())
     }
 }

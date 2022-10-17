@@ -63,7 +63,6 @@ fun ListScreen(
                                 onClickToDetailScreen.invoke(repo.id)
                             })
                         }
-                        viewModel.finishLoading()
                     }
                     is ViewState.Error ->
                         ErrorView(message = viewState.message, viewModel::refresh)

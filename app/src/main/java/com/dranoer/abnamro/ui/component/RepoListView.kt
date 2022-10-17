@@ -17,7 +17,7 @@ import com.dranoer.abnamro.ui.theme.GithubRepoTheme
 @Composable
 fun RepoListView(repos: List<Repo>, callback: OnClickListener?) {
     LazyColumn(
-        modifier = Modifier.padding(start = 18.dp, top = 12.dp, end = 18.dp, bottom = 12.dp),
+        modifier = Modifier.padding(start = 18.dp, top = 12.dp, end = 18.dp),
     ) {
         items(
             items = repos,

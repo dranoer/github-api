@@ -9,7 +9,6 @@ import com.dranoer.abnamro.data.remote.WebService
 import com.dranoer.abnamro.domain.RepoRepository
 import com.dranoer.abnamro.ui.util.Const.BASE_API
 import com.dranoer.abnamro.ui.util.Const.DATABASE_NAME
-import com.dranoer.abnamro.ui.util.Const.TIME_OUT
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -21,7 +20,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -40,9 +38,6 @@ class AppModule {
         }
 
         val okHttpClient = OkHttpClient.Builder()
-            .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
-            .readTimeout(TIME_OUT, TimeUnit.SECONDS)
-            .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
             .addInterceptor(httpLogger)
             .build()
 

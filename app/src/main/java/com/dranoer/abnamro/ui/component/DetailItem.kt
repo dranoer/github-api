@@ -71,7 +71,8 @@ fun DetailItem(item: RepoEntity) {
         //region Visibility
         IconItem(
             icon = Icons.Rounded.KeyboardArrowRight,
-            text = stringResource(id = R.string.visibility_status, item.visibility),
+            text = if (item.visibility.isBlank()) stringResource(R.string.unspecified)
+            else stringResource(R.string.visibility_status, item.visibility),
             paddingEnd = 5,
         ) //endregion
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.size_30)))
@@ -105,6 +106,42 @@ private fun PreviewDetailItem_Normal() {
                 description = "This is normal preview description.",
                 avatar_url = "",
                 visibility = "private",
+                private = false,
+            )
+        )
+    }
+}
+
+@Preview("Detail item with long inputs")
+@Composable
+private fun PreviewDetailItem_Long() {
+    GithubRepoTheme {
+        DetailItem(
+            item = RepoEntity(
+                id = 12346,
+                name = "This is a vary very very very very very very very very very long name",
+                full_name = "This is a very very very very very very very very very very very very very very very very very very very long fullname",
+                description = "This is a very very very very very very very very very very very very very very very very very very very very very very very very very very long preview description.",
+                avatar_url = "",
+                visibility = "private",
+                private = false,
+            )
+        )
+    }
+}
+
+@Preview("Detail item with no inputs")
+@Composable
+private fun PreviewDetailItem_Empty() {
+    GithubRepoTheme {
+        DetailItem(
+            item = RepoEntity(
+                id = 12347,
+                name = "No input name",
+                full_name = "No input preview fullname",
+                description = "This is no input preview description.",
+                avatar_url = "",
+                visibility = "",
                 private = false,
             )
         )

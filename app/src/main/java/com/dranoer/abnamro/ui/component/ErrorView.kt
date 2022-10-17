@@ -7,8 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dranoer.abnamro.R
+import com.dranoer.abnamro.ui.theme.GithubRepoTheme
 
 @Composable
 fun ErrorView(message: String, refresh: () -> Unit) {
@@ -24,3 +26,15 @@ fun ErrorView(message: String, refresh: () -> Unit) {
         }
     }
 }
+
+//region Preview
+@Preview("Normal Error view")
+@Composable
+private fun PreviewErrorView_Normal() {
+    GithubRepoTheme() {
+        ErrorView(
+            message = "Oops! there is sth wrong",
+            refresh = {}
+        )
+    }
+} //endregion

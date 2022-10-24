@@ -59,9 +59,10 @@ fun ListScreen(
                             state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
                             onRefresh = { viewModel.refresh() },
                         ) {
-                            RepoListView(viewState.data, OnClickListener { repo ->
-                                onClickToDetailScreen.invoke(repo.id)
-                            })
+                            RepoListView(
+                                viewState.data,
+                                OnClickListener { repo -> onClickToDetailScreen.invoke(repo.id) }
+                            )
                         }
                     }
                     is ViewState.Error ->

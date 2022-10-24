@@ -14,6 +14,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.dranoer.abnamro.data.local.RepoDao
 import com.dranoer.abnamro.data.remote.WebService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
@@ -36,6 +37,9 @@ class MainViewModelTest {
 
     @Mock
     private lateinit var dao: RepoDao
+
+    @Mock
+    private lateinit var repository: RepoRepository
 
     @Before
     fun setUp() {
@@ -60,19 +64,18 @@ class MainViewModelTest {
 
     @Test
     fun `WHEN response is not okay THEN should return error`() {
-        val errorMsg = "Server error message"
-        `when`(context.getString(anyInt())).thenReturn(errorMsg)
-
         testCoroutineRule.runBlockingTest {
-            `when`(webService.getRepoList(1, 10)).thenThrow(RuntimeException(""))
-            `when`(dao.getRepos()).thenReturn(emptyList())
+            `when`(repository.result).thenAnswer {
+                flowOf(
+                    ViewState.Loading,
+                    ViewState.Error("error")
+                )
+            }
         }
-        val repository = RepoRepository(webService, dao)
-
         testCoroutineRule.pauseDispatcher()
         val viewModel = MainViewModel(repository)
         MatcherAssert.assertThat(viewModel.stateFlow.value, `is`(ViewState.Loading))
         testCoroutineRule.resumeDispatcher()
-        MatcherAssert.assertThat(viewModel.stateFlow.value, `is`(ViewState.Error(errorMsg)))
+        MatcherAssert.assertThat(viewModel.stateFlow.value, `is`(ViewState.Error("error")))
     }
 }

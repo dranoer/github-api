@@ -5,9 +5,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
+import com.dranoer.abnamro.R
 import com.dranoer.abnamro.data.model.Owner
 import com.dranoer.abnamro.data.model.Repo
 import com.dranoer.abnamro.ui.OnClickListener
@@ -17,7 +18,11 @@ import com.dranoer.abnamro.ui.theme.GithubRepoTheme
 @Composable
 fun RepoListView(repos: List<Repo>, callback: OnClickListener?) {
     LazyColumn(
-        modifier = Modifier.padding(start = 18.dp, top = 12.dp, end = 18.dp),
+        modifier = Modifier.padding(
+            start = dimensionResource(id = R.dimen.size_18),
+            top = dimensionResource(id = R.dimen.size_12),
+            end = dimensionResource(id = R.dimen.size_18)
+        ),
     ) {
         items(
             items = repos,
@@ -47,4 +52,4 @@ private fun PreviewRepoList_Normal() {
             callback = null,
         )
     }
-}
+} //endregion

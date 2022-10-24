@@ -6,9 +6,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.dranoer.abnamro.R
 import com.dranoer.abnamro.ui.theme.GithubRepoTheme
 
@@ -20,7 +20,7 @@ fun ErrorView(message: String, refresh: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(message)
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(dimensionResource(id = R.dimen.size_16)))
         Button(onClick = refresh) {
             Text(text = stringResource(R.string.retry))
         }

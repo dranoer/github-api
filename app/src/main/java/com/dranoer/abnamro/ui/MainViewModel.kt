@@ -43,7 +43,6 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             val result = repository.getDetail(id)
             _detailFlow.emit(result)
-            return@launch
         }
     }
 }

@@ -13,13 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberAsyncImagePainter
 import com.dranoer.abnamro.data.model.Repo
 import com.dranoer.abnamro.ui.OnClickListener
 import com.dranoer.abnamro.R
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.dranoer.abnamro.data.model.Owner
@@ -31,23 +31,23 @@ fun RepoItem(item: Repo, callback: OnClickListener?) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(dimensionResource(id = R.dimen.size_10))
             .clickable { callback?.onClick(item) },
         shape = RoundedCornerShape(16),
     ) {
         Row(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(dimensionResource(id = R.dimen.size_16))
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Start
         ) {
             //region Avatar
             Image(
-                modifier = Modifier.size(50.dp),
+                modifier = Modifier.size(dimensionResource(id = R.dimen.size_50)),
                 painter = rememberAsyncImagePainter(item.owner?.avatar_url),
                 contentDescription = null,
             )
-            Spacer(modifier = Modifier.width(12.dp)) //endregion
+            Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.size_12))) //endregion
             //region Info
             Column() {
                 //region Name
@@ -58,7 +58,7 @@ fun RepoItem(item: Repo, callback: OnClickListener?) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.height(8.dp)) //endregion
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.size_8))) //endregion
                 //region Status
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -71,7 +71,7 @@ fun RepoItem(item: Repo, callback: OnClickListener?) {
                             item.visibility.toString()
                         ),
                     )
-                    Spacer(modifier = Modifier.width(20.dp)) //endregion
+                    Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.size_20))) //endregion
                     //region Privacy
                     IconItem(
                         icon = Icons.Rounded.KeyboardArrowRight,

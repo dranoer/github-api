@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dranoer.abnamro.R
 import com.dranoer.abnamro.ui.MainViewModel
@@ -36,7 +35,7 @@ fun DetailScreen(
     launch()
 
     DetailContent(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier.padding(dimensionResource(id = R.dimen.size_8)),
         viewState = viewModel.detailFlow.collectAsState().value,
         backPress = backPress,
     )
@@ -63,7 +62,7 @@ private fun DetailContent(
                     }
                 },
                 backgroundColor = colorResource(id = R.color.white),
-                elevation = 0.dp,
+                elevation = dimensionResource(id = R.dimen.size_0),
             )
         },
         content = { padding ->
@@ -100,5 +99,4 @@ private fun PreviewDetailScreen_Normal() {
             )
         )
     }
-}
-//endregion
+} //endregion

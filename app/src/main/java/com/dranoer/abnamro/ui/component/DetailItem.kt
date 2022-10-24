@@ -16,7 +16,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberAsyncImagePainter
 import com.dranoer.abnamro.R
@@ -32,14 +31,14 @@ fun DetailItem(item: RepoEntity) {
     Column {
         Row(
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = dimensionResource(id = R.dimen.size_20))
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             //region Avatar
             Image(
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(dimensionResource(id = R.dimen.size_40)),
                 painter = rememberAsyncImagePainter(item.avatar_url),
                 contentDescription = null,
             ) //endregion
@@ -146,5 +145,4 @@ private fun PreviewDetailItem_Empty() {
             )
         )
     }
-}
-//endregion
+} //endregion

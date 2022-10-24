@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -36,6 +35,7 @@ fun AppScreen() {
         navController = navController,
         startDestination = Route.List.route,
     ) {
+        //region List Screen
         composable(route = Route.List.route) {
             ListScreen(
                 onClickToDetailScreen = { repoId ->
@@ -44,7 +44,8 @@ fun AppScreen() {
                     )
                 }
             )
-        }
+        } //endregion
+        //region Detail Screen
         composable(
             route = Route.Detail.route,
             arguments = listOf(
@@ -61,14 +62,6 @@ fun AppScreen() {
                     navController.navigateUp()
                 }
             )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    GithubRepoTheme {
-        AppScreen()
+        } //endregion
     }
 }
